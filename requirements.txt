@@ -1,0 +1,8 @@
+streamlit
+openai
+pandas
+matplotlib
+pydeck
+sqlalchemy
+requests
+fpdf
