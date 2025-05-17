@@ -348,7 +348,7 @@ elif menu == "Aanbodscan":
     aanbod["advies"] = aanbod["rendement"].apply(tag)
 
     for i, row in aanbod.iterrows():
-    with st.expander(f"{row['adres']} – €{row['prijs']:,}"):
+        with st.expander(f"{row['adres']} – €{row['prijs']:,}"):
         st.markdown(f"- 📏 m²: **{row['m2']}**")
         st.markdown(f"- 📅 Bouwjaar: **{row['bouwjaar']}**")
         st.markdown(f"- 💰 Huurinschatting: **€{int(row['huur'])}/maand**")
