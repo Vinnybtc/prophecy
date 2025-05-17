@@ -355,12 +355,12 @@ elif menu == "Aanbodscan":
             st.markdown(f"- 📈 Netto rendement: **{row['rendement']*100:.2f}%**")
             st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
             if st.button("🔍 Bekijk scan", key=f"btn_{i}"):
-    st.markdown("---")
-    st.markdown(f"### 📋 Detailscan: {row['adres']}")
-    st.markdown(f"- Vraagprijs: **€{row['prijs']:,}**")
-    st.markdown(f"- Verwachte huur: **€{int(row['huur'])}/maand**")
-    st.markdown(f"- Netto rendement: **{row['rendement']*100:.2f}%**")
-    st.markdown(f"- AI-tag: **{row['advies']}**")
+        st.markdown("---")
+        st.markdown(f"### 📋 Detailscan: {row['adres']}")
+        st.markdown(f"- Vraagprijs: **€{row['prijs']:,}**")
+        st.markdown(f"- Verwachte huur: **€{int(row['huur'])}/maand**")
+        st.markdown(f"- Netto rendement: **{row['rendement']*100:.2f}%**")
+        st.markdown(f"- AI-tag: **{row['advies']}**")
     
     pitch = f\"\"\"{row['adres']}
 Vraagprijs: €{row['prijs']}
