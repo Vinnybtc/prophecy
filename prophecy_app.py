@@ -354,4 +354,26 @@ elif menu == "Aanbodscan":
             st.markdown(f"- 💰 Huurinschatting: **€{int(row['huur'])}/maand**")
             st.markdown(f"- 📈 Netto rendement: **{row['rendement']*100:.2f}%**")
             st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
-            st.button("🔍 Bekijk scan", key=f"btn_{i}")
+            if st.button("🔍 Bekijk scan", key=f"btn_{i}"):
+    st.markdown("---")
+    st.markdown(f"### 📋 Detailscan: {row['adres']}")
+    st.markdown(f"- Vraagprijs: **€{row['prijs']:,}**")
+    st.markdown(f"- Verwachte huur: **€{int(row['huur'])}/maand**")
+    st.markdown(f"- Netto rendement: **{row['rendement']*100:.2f}%**")
+    st.markdown(f"- AI-tag: **{row['advies']}**")
+    
+    pitch = f\"\"\"{row['adres']}
+Vraagprijs: €{row['prijs']}
+Huurinschatting: €{int(row['huur'])}/maand
+Netto rendement: {row['rendement']*100:.2f}%
+AI-tag: {row['advies']}
+
+Geïnteresseerd? Voeg toe aan je selectie of neem contact op met PROPHECY.\"\"\"
+    
+    st.text_area("📝 Pitchtekst", pitch, height=150)
+    
+    if st.button("⭐ Voeg toe aan selectie", key=f"save_{i}"):
+        st.success("✅ Object opgeslagen in je selectie.")
+    
+    if st.button("📩 Markeer als lead", key=f"lead_{i}"):
+        st.success("✅ Gemarkeerd als lead.")
