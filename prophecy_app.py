@@ -5,6 +5,9 @@ st.title("🔮 PROPHECY is volledig geladen")
 st.markdown("Welkom bij de volledige versie van PROPHECY – v1 t/m v30. Kies hieronder je functie.")
 
 menu = st.sidebar.selectbox("📂 Modules", [
+    "Objectanalyse", "Pitch & AI", "Portfolio", "Kaart", "Risico",
+    "Lead & Rapport", "Financiering", "PDF & Dataroom", "Partnerportaal"
+])
     "Objectanalyse", "Pitch & AI", "Portfolio", "Kaart", "Risico", "Lead & Rapport", "Financiering", "PDF & Dataroom"
 ])
 
