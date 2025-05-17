@@ -298,3 +298,32 @@ elif menu == "Partnerportaal":
   }
 }
 """, language="json")
+elif menu == "Facturatie":
+    import datetime
+    import uuid
+
+    st.header("💳 Maandelijkse factuur & rapportlink")
+
+    organisaties = {
+        "InvestXL": {"scans": 34, "leads": 9, "rapporten": 21, "credits": 60, "kosten": 139.50},
+        "BrickAgency": {"scans": 17, "leads": 4, "rapporten": 9, "credits": 28, "kosten": 74.25}
+    }
+
+    org = st.selectbox("Kies organisatie", list(organisaties.keys()))
+    maand = st.selectbox("Kies maand", ["Mei 2024", "April 2024", "Maart 2024"])
+    data = organisaties[org]
+
+    st.markdown(f"- 📅 Maand: **{maand}**")
+    st.markdown(f"- 📊 Scans: **{data['scans']}** | Leads: **{data['leads']}** | Rapporten: **{data['rapporten']}**")
+    st.markdown(f"- 🔋 Credits verbruikt: **{data['credits']}**")
+    st.markdown(f"- 💰 Totaal kosten: **€{data['kosten']:.2f}**")
+
+    st.subheader("✉️ E-mailnotificatie instellen")
+    mail = st.text_input("E-mailadres", "you@company.com")
+    freq = st.radio("Frequentie", ["Dagelijks", "Wekelijks", "Maandelijks"])
+    if st.button("Sla instellingen op"):
+        st.success(f"Notificatie geactiveerd naar {mail} ({freq})")
+
+    st.subheader("📎 Deelbare link naar rapport")
+    unieke_link = f"https://prophecy.ai/share/{str(uuid.uuid4())[:8]}"
+    st.code(unieke_link, language="text")
