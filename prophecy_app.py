@@ -151,8 +151,42 @@ Contacteer Team PROPHECY voor meer info."""
         st.success("✅ Lead is opgevolgd. Verwerk in je CRM.")
 
 elif menu == "Financiering":
-    st.header("💰 Financieringsanalyse")
-    st.markdown("Bereken maandlasten, ROI, en biedingsscenario's.")
+    st.header("💰 Financiering & Onderhandeling")
+
+    prijs = st.number_input("Vraagprijs (€)", value=440000)
+    inbreng = st.number_input("Eigen inbreng (€)", value=80000)
+    rente = st.slider("Rente (%)", 1.0, 6.0, 3.5)
+    looptijd = st.slider("Looptijd (jaar)", 10, 30, 20)
+    huur = st.number_input("Huur per maand (€)", value=1750)
+
+    geleend = prijs - inbreng
+    maandlast = ((geleend * (rente / 100)) + (geleend / looptijd)) / 12
+    huur_jaar = huur * 12
+    netto = huur_jaar - maandlast * 12
+    roi = round((netto / inbreng) * 100, 2) if inbreng else 0
+
+    st.markdown(f"- 💸 Geleend: €{geleend:,}")
+    st.markdown(f"- 📉 Maandlast: €{int(maandlast)}")
+    st.markdown(f"- 📈 Netto cashflow: €{int(netto)} p.j.")
+    st.markdown(f"- ROI op inbreng: **{roi}%**")
+
+    st.subheader("🤝 Onderhandeling")
+    bod = st.slider("Stel alternatief bod voor (€)", prijs - 100000, prijs, prijs - 25000, 5000)
+    nieuw_ge = bod - inbreng
+    maandlast_nieuw = ((nieuw_ge * (rente / 100)) + (nieuw_ge / looptijd)) / 12
+    netto_nieuw = huur_jaar - maandlast_nieuw * 12
+    roi_nieuw = round((netto_nieuw / inbreng) * 100, 2)
+
+    st.markdown(f"- 🧮 Nieuwe maandlast: €{int(maandlast_nieuw)}")
+    st.markdown(f"- 🧾 Nieuwe cashflow: €{int(netto_nieuw)}")
+    st.markdown(f"- 📈 Nieuwe ROI: **{roi_nieuw}%**")
+
+    if roi_nieuw > roi:
+        st.success("🔼 Beter rendement: bod is strategisch sterk.")
+    elif roi_nieuw < roi:
+        st.warning("⬇️ Minder rendement: alleen zinvol bij andere voordelen.")
+    else:
+        st.info("⚖️ Vergelijkbaar rendement. Onderhandel slim.")
 
 elif menu == "PDF & Dataroom":
     st.header("📄 PDF-export & Dataroom")
