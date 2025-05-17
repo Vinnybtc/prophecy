@@ -288,7 +288,8 @@ elif menu == "Partnerportaal":
 
     st.subheader("🔌 API endpoint documentatie (simulatie)")
     st.markdown("**Endpoint:** `/scan24/ai-analyse` (POST)\n**Content-Type:** application/json")
-    st.code(\"\"\"{
+    st.code("""
+{
   "gebruiker": "vincent@prophecy.ai",
   "object": {
     "adres": "X",
@@ -296,4 +297,4 @@ elif menu == "Partnerportaal":
     "huur": 1750
   }
 }
-\"\"\", language="json")
+""", language="json")
