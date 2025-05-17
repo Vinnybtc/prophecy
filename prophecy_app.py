@@ -356,25 +356,25 @@ elif menu == "Aanbodscan":
             st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
 
         if st.button("🔍 Bekijk scan", key=f"btn_{i}"):
-    pitch = f"""{row['adres']}
-Vraagprijs: €{row['prijs']}
-Huurinschatting: €{int(row['huur'])}/maand
-Netto rendement: {row['rendement']*100:.2f}%
-AI-tag: {row['advies']}
+        pitch = f"""{row['adres']}
+        Vraagprijs: €{row['prijs']}
+        Huurinschatting: €{int(row['huur'])}/maand
+        Netto rendement: {row['rendement']*100:.2f}%
+        AI-tag: {row['advies']}
 
-Geïnteresseerd? Voeg toe aan je selectie of neem contact op met PROPHECY."""
+        Geïnteresseerd? Voeg toe aan je selectie of neem contact op met PROPHECY."""
     
-    st.text_area("📝 Pitchtekst", pitch, height=150)
+        st.text_area("📝 Pitchtekst", pitch, height=150)
             if st.button("⭐ Voeg toe aan selectie", key=f"save_{i}"):
                 st.success("✅ Object opgeslagen in je selectie.")
 
             if st.button("📩 Markeer als lead", key=f"lead_{i}"):
                 st.success("✅ Gemarkeerd als lead.")
     
-    st.text_area("📝 Pitchtekst", pitch, height=150)
+        st.text_area("📝 Pitchtekst", pitch, height=150)
     
-    if st.button("⭐ Voeg toe aan selectie", key=f"save_{i}"):
+        if st.button("⭐ Voeg toe aan selectie", key=f"save_{i}"):
         st.success("✅ Object opgeslagen in je selectie.")
     
-    if st.button("📩 Markeer als lead", key=f"lead_{i}"):
+        if st.button("📩 Markeer als lead", key=f"lead_{i}"):
         st.success("✅ Gemarkeerd als lead.")
