@@ -51,8 +51,38 @@ elif menu == "Pitch & AI":
         st.warning("AI: Laag rendement. Alleen overwegen bij unieke locatie of verbouwpotentie.")
 
 elif menu == "Portfolio":
-    st.header("📊 Portfolio")
-    st.markdown("Overzicht en totalen van al jouw gescande objecten.")
+    st.header("📊 Vastgoedportefeuille")
+
+    portfolio = [
+        {'adres': 'Prinsengracht 123', 'prijs': 425000, 'rendement': 0.051, 'verbouwwaarde': 30000, 'status': 'actief'},
+        {'adres': 'Appelhoutstraat 16', 'prijs': 440000, 'rendement': 0.048, 'verbouwwaarde': 0, 'status': 'actief'},
+        {'adres': 'Willemsparkweg 88', 'prijs': 465000, 'rendement': 0.056, 'verbouwwaarde': 45000, 'status': 'verkocht'}
+    ]
+
+    status_filter = st.selectbox("Filter op status", ["alle", "actief", "verkocht"])
+    gefilterd = [p for p in portfolio if status_filter == "alle" or p['status'] == status_filter]
+
+    if gefilterd:
+        totaal_waarde = sum(p['prijs'] for p in gefilterd)
+        gemiddeld_rendement = round(sum(p['rendement'] for p in gefilterd) / len(gefilterd) * 100, 2)
+        totaal_verbouw = sum(p['verbouwwaarde'] for p in gefilterd)
+
+        st.markdown(f"- 💼 Totale waarde: **€{totaal_waarde:,}**")
+        st.markdown(f"- 📈 Gemiddeld rendement: **{gemiddeld_rendement}%**")
+        st.markdown(f"- 🧱 Waarde uit verbouw: **€{totaal_verbouw:,}**")
+
+        for p in gefilterd:
+            with st.expander(f"{p['adres']} – {p['status']}"):
+                st.markdown(f"- Prijs: €{p['prijs']}")
+                st.markdown(f"- Rendement: {p['rendement']*100:.2f}%")
+                st.markdown(f"- Verbouwwaarde: €{p['verbouwwaarde']}")
+    else:
+        st.info("Geen objecten in deze status.")
+
+    st.subheader("🔔 Alertsysteem (simulatie)")
+    st.markdown("- 📉 Prijsdaling bij Willemsparkweg 88: **€25.000** korting")
+    st.markdown("- ⚠️ Verhoogd risico op Singel 89")
+    st.markdown("- 🆕 Nieuw object matcht je profiel: Elandstraat 44")
 
 elif menu == "Kaart":
     import pandas as pd
