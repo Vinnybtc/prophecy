@@ -349,11 +349,11 @@ elif menu == "Aanbodscan":
 
     for i, row in aanbod.iterrows():
         with st.expander(f"{row['adres']} – €{row['prijs']:,}"):
-        st.markdown(f"- 📏 m²: **{row['m2']}**")
-        st.markdown(f"- 📅 Bouwjaar: **{row['bouwjaar']}**")
-        st.markdown(f"- 💰 Huurinschatting: **€{int(row['huur'])}/maand**")
-        st.markdown(f"- 📈 Netto rendement: **{row['rendement']*100:.2f}%**")
-        st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
+            st.markdown(f"- 📏 m²: **{row['m2']}**")
+            st.markdown(f"- 📅 Bouwjaar: **{row['bouwjaar']}**")
+            st.markdown(f"- 💰 Huurinschatting: **€{int(row['huur'])}/maand**")
+            st.markdown(f"- 📈 Netto rendement: **{row['rendement']*100:.2f}%**")
+            st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
 
         if st.button("🔍 Bekijk scan", key=f"btn_{i}"):
             st.markdown("---")
