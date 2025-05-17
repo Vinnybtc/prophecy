@@ -23,8 +23,32 @@ if menu == "Objectanalyse":
 
 elif menu == "Pitch & AI":
     st.header("📝 Pitch & AI")
-    st.text_area("📩 Genereerde pitch", "Voer eerst een analyse uit...")
-    st.markdown("AI-coaching en aanbevelingen volgen in deze sectie.")
+    
+    pitch_adres = st.text_input("Adres", "Willemsparkweg 88")
+    pitch_prijs = st.number_input("Vraagprijs (€)", value=440000)
+    pitch_huur = st.number_input("Huur per maand (€)", value=1750)
+    pitch_rendement = round((pitch_huur * 12 * 0.75) / pitch_prijs, 4)
+    potentie = "Opbouw mogelijk" if pitch_rendement > 0.05 else "Beperkt"
+
+    pitch_text = (
+        f"{pitch_adres}\n"
+        f"Vraagprijs: €{pitch_prijs}\n"
+        f"Huur: €{pitch_huur}/maand\n"
+        f"Netto rendement: {pitch_rendement*100:.2f}%\n"
+        f"Potentie: {potentie}\n\n"
+        "Geïnteresseerd? Neem contact op met Team PROPHECY."
+    )
+
+    st.subheader("📩 Pitchtekst")
+    st.text_area("Automatisch gegenereerd", pitch_text, height=180)
+
+    st.subheader("🤖 AI-aanbeveling (simulatie)")
+    if pitch_rendement > 0.055:
+        st.success("AI: Dit object scoort boven verwachting. Geschikt voor buy-to-let.")
+    elif pitch_rendement > 0.045:
+        st.info("AI: Gemiddeld rendement. Onderhandel slim en reken scenario’s door.")
+    else:
+        st.warning("AI: Laag rendement. Alleen overwegen bij unieke locatie of verbouwpotentie.")
 
 elif menu == "Portfolio":
     st.header("📊 Portfolio")
