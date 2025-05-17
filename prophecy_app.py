@@ -55,8 +55,41 @@ elif menu == "Portfolio":
     st.markdown("Overzicht en totalen van al jouw gescande objecten.")
 
 elif menu == "Kaart":
-    st.header("🗺️ Kaartvisualisatie")
-    st.markdown("Visualiseer jouw objecten per regio met risicokleuring.")
+    import pandas as pd
+    import pydeck as pdk
+
+    st.header("🗺️ Vastgoed op de kaart")
+
+    objecten = pd.DataFrame([
+        {"adres": "Prinsengracht 123", "lat": 52.3738, "lon": 4.8910, "rendement": 0.051, "risico": 0.2},
+        {"adres": "Appelhoutstraat 16", "lat": 52.1017, "lon": 5.1155, "rendement": 0.048, "risico": 0.4},
+        {"adres": "Willemsparkweg 88", "lat": 52.3566, "lon": 4.8673, "rendement": 0.056, "risico": 0.6},
+        {"adres": "Singel 89", "lat": 52.3740, "lon": 4.8897, "rendement": 0.045, "risico": 0.8}
+    ])
+
+    kleurtype = st.radio("Kleur op basis van:", ["Rendement", "Risico"])
+
+    if kleurtype == "Rendement":
+        objecten["kleur"] = objecten["rendement"].apply(lambda x: [0, int(x*2000), 0])
+    else:
+        objecten["kleur"] = objecten["risico"].apply(lambda x: [int(x*255), 0, 0])
+
+    st.pydeck_chart(pdk.Deck(
+        map_style='mapbox://styles/mapbox/light-v9',
+        initial_view_state=pdk.ViewState(latitude=52.37, longitude=4.89, zoom=11, pitch=45),
+        layers=[
+            pdk.Layer(
+                'ScatterplotLayer',
+                data=objecten,
+                get_position='[lon, lat]',
+                get_fill_color='kleur',
+                get_radius=120,
+                pickable=True
+            )
+        ]
+    ))
+
+    st.dataframe(objecten[["adres", "rendement", "risico"]])
 
 elif menu == "Risico":
     st.header("⚠️ Risico & Alerts")
