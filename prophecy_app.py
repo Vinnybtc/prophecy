@@ -255,3 +255,40 @@ elif menu == "PDF & Dataroom":
 
     st.subheader("📄 PDF-samenvatting (simulatie)")
     st.markdown("Rapportgegevens + handtekening + planning gereed voor PDF-export.")
+elif menu == "Partnerportaal":
+    import random
+
+    st.header("🤝 PROPHECY Partneroverzicht")
+
+    partners = {
+        'investxl': {'clicks': 72, 'signups': 14, 'pro': 3},
+        'brickagency': {'clicks': 45, 'signups': 9, 'pro': 2}
+    }
+
+    partner_id = st.selectbox("Selecteer partner", list(partners.keys()))
+    data = partners[partner_id]
+    commissie = data['pro'] * 25
+
+    st.markdown(f"- Clicks: **{data['clicks']}**")
+    st.markdown(f"- Aanmeldingen: **{data['signups']}**")
+    st.markdown(f"- Pro-accounts: **{data['pro']}**")
+    st.markdown(f"- Verdiende commissie: **€{commissie}**")
+    st.code(f"https://prophecy.ai/?ref={partner_id}", language="text")
+
+    if st.button("Simuleer klik + signup"):
+        data['clicks'] += random.randint(5, 15)
+        data['signups'] += random.randint(1, 3)
+        data['pro'] += random.randint(0, 1)
+        st.success("Statistieken bijgewerkt!")
+
+    st.subheader("🔌 API endpoint documentatie (simulatie)")
+    st.markdown("**Endpoint:** `/scan24/ai-analyse` (POST)\n**Content-Type:** application/json")
+    st.code(\"\"\"{
+  "gebruiker": "vincent@prophecy.ai",
+  "object": {
+    "adres": "X",
+    "prijs": 450000,
+    "huur": 1750
+  }
+}
+\"\"\", language="json")
