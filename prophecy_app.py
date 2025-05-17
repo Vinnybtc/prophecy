@@ -5,6 +5,7 @@ st.title("🔮 PROPHECY is volledig geladen")
 st.markdown("Welkom bij de volledige versie van PROPHECY – v1 t/m v30. Kies hieronder je functie.")
 
 menu = st.sidebar.selectbox("📂 Modules", [
+    "Aanbodscan",  # <--- nieuw toegevoegd
     "Objectanalyse", "Pitch & AI", "Portfolio", "Kaart", "Risico",
     "Lead & Rapport", "Financiering", "PDF & Dataroom", "Partnerportaal", "Facturatie"
 ])
@@ -320,3 +321,37 @@ elif menu == "Facturatie":
     st.subheader("📎 Deelbare link naar rapport")
     unieke_link = f"https://prophecy.ai/share/{str(uuid.uuid4())[:8]}"
     st.code(unieke_link, language="text")
+elif menu == "Aanbodscan":
+    st.header("📥 PROPHECY Aanbodscan")
+
+    import pandas as pd
+
+    aanbod = pd.DataFrame([
+        {"adres": "Prinsengracht 123, Amsterdam", "prijs": 475000, "m2": 85, "bouwjaar": 1930, "locatie": "Amsterdam"},
+        {"adres": "Appelhoutstraat 16, Utrecht", "prijs": 425000, "m2": 80, "bouwjaar": 1970, "locatie": "Utrecht"},
+        {"adres": "Havikstraat 8, Almere", "prijs": 365000, "m2": 90, "bouwjaar": 2005, "locatie": "Almere"},
+        {"adres": "Singel 89, Amsterdam", "prijs": 515000, "m2": 78, "bouwjaar": 1900, "locatie": "Amsterdam"},
+        {"adres": "Bergstraat 11, Utrecht", "prijs": 395000, "m2": 70, "bouwjaar": 1985, "locatie": "Utrecht"},
+    ])
+
+    huur_factors = {"Amsterdam": 27, "Utrecht": 24, "Almere": 20}
+    aanbod["huur"] = aanbod.apply(lambda r: r["m2"] * huur_factors.get(r["locatie"], 22), axis=1)
+    aanbod["rendement"] = (aanbod["huur"] * 12 * 0.75) / aanbod["prijs"]
+
+    def tag(r):
+        if r > 0.055:
+            return "🟢 Kansrijk"
+        elif r > 0.045:
+            return "🟡 Gemiddeld"
+        else:
+            return "🔴 Af te raden"
+    aanbod["advies"] = aanbod["rendement"].apply(tag)
+
+    for i, row in aanbod.iterrows():
+        with st.expander(f"{row['adres']} – €{row['prijs']:,}"):
+            st.markdown(f"- 📏 m²: **{row['m2']}**")
+            st.markdown(f"- 📅 Bouwjaar: **{row['bouwjaar']}**")
+            st.markdown(f"- 💰 Huurinschatting: **€{int(row['huur'])}/maand**")
+            st.markdown(f"- 📈 Netto rendement: **{row['rendement']*100:.2f}%**")
+            st.markdown(f"- 🤖 AI-tag: **{row['advies']}**")
+            st.button("🔍 Bekijk scan", key=f"btn_{i}")
