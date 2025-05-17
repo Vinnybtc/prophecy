@@ -189,5 +189,36 @@ elif menu == "Financiering":
         st.info("⚖️ Vergelijkbaar rendement. Onderhandel slim.")
 
 elif menu == "PDF & Dataroom":
-    st.header("📄 PDF-export & Dataroom")
-    st.markdown("Upload contracten en plan overdrachtsmomenten.")
+    import datetime
+
+    st.header("📁 Dataroom & Ondertekening")
+
+    st.subheader("📂 Upload documentatie")
+    woz = st.file_uploader("WOZ-beschikking")
+    splitsing = st.file_uploader("Splitsingsakte")
+    huur = st.file_uploader("Huurcontract")
+    energielabel = st.file_uploader("Energielabel")
+
+    uploads = [woz, splitsing, huur, energielabel]
+    if all(uploads):
+        st.success("✅ Alle documenten geüpload")
+    else:
+        st.warning("⚠️ Nog niet alle documenten geüpload")
+
+    st.subheader("📅 Aankoopplanning")
+    optie = st.date_input("Optie geldig tot", value=datetime.date.today())
+    inspectie = st.date_input("Inspectiedatum")
+    transport = st.date_input("Transportdatum")
+
+    st.markdown(f"- Optie tot: **{optie}**")
+    st.markdown(f"- Inspectie: **{inspectie}**")
+    st.markdown(f"- Transport: **{transport}**")
+
+    st.subheader("✍️ Ondertekening")
+    naam = st.text_input("Naam ondertekenaar")
+    if st.button("Onderteken intentieverklaring") and naam:
+        st.success(f"Document digitaal ondertekend door {naam}")
+        st.balloons()
+
+    st.subheader("📄 PDF-samenvatting (simulatie)")
+    st.markdown("Rapportgegevens + handtekening + planning gereed voor PDF-export.")
