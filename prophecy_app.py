@@ -126,8 +126,29 @@ elif menu == "Risico":
         st.success("✅ Portefeuille is relatief stabiel.")
 
 elif menu == "Lead & Rapport":
-    st.header("📥 Leadgeneratie & Rapportage")
-    st.markdown("Genereer PDF's, stuur rapporten en volg leads op.")
+    st.header("📥 Leadgenerator & rapport")
+
+    pitch_adres = st.text_input("Adres", "Willemsparkweg 88")
+    pitch_prijs = st.number_input("Vraagprijs (€)", value=440000)
+    pitch_huur = st.number_input("Huur (€)", value=1750)
+    pitch_rendement = round((pitch_huur * 12 * 0.75) / pitch_prijs, 4)
+    pitch_potentie = "Opbouw mogelijk" if pitch_rendement > 0.05 else "Beperkt"
+
+    pitch = f"""{pitch_adres}
+Vraagprijs: €{pitch_prijs}
+Huur: €{pitch_huur}/maand
+Netto rendement: {pitch_rendement*100:.2f}%
+Potentie: {pitch_potentie}
+
+Contacteer Team PROPHECY voor meer info."""
+
+    st.text_area("📄 Pitchtekst / Rapport", pitch, height=180)
+
+    lead_opvolging = st.radio("Leadstatus", ["Niet aangemaakt", "Open", "Opgevolgd"])
+    if lead_opvolging == "Open":
+        st.warning("Lead is nog niet opgevolgd.")
+    elif lead_opvolging == "Opgevolgd":
+        st.success("✅ Lead is opgevolgd. Verwerk in je CRM.")
 
 elif menu == "Financiering":
     st.header("💰 Financieringsanalyse")
