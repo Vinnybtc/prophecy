@@ -92,8 +92,38 @@ elif menu == "Kaart":
     st.dataframe(objecten[["adres", "rendement", "risico"]])
 
 elif menu == "Risico":
-    st.header("⚠️ Risico & Alerts")
-    st.markdown("AI-risicoscore en externe meldingen per object.")
+    st.header("⚠️ Risicoanalyse & Vastgoedalerts")
+
+    portfolio = [
+        {'adres': 'Prinsengracht 123', 'risico': 0.2, 'melding': False},
+        {'adres': 'Appelhoutstraat 16', 'risico': 0.4, 'melding': True},
+        {'adres': 'Willemsparkweg 88', 'risico': 0.6, 'melding': False},
+        {'adres': 'Singel 89', 'risico': 0.8, 'melding': True}
+    ]
+
+    for obj in portfolio:
+        kleur = "🟢" if obj['risico'] < 0.3 else "🟡" if obj['risico'] < 0.6 else "🔴"
+        status = "Geen alert" if not obj['melding'] else "⚠️ Externe melding actief"
+        with st.expander(f"{kleur} {obj['adres']} – Risico: {obj['risico']*100:.0f}%"):
+            st.markdown(f"- Risiconiveau: **{obj['risico']*100:.0f}%**")
+            st.markdown(f"- Status: {status}")
+            if obj['risico'] > 0.5:
+                st.warning("AI-advies: Vermijd aankoop tenzij prijs fors onder markt ligt.")
+            elif obj['risico'] > 0.3:
+                st.info("AI-advies: Voer due diligence uit op vergunningen, meldingen, huurders.")
+            else:
+                st.success("AI-advies: Object lijkt stabiel op basis van huidige signalen.")
+
+    st.subheader("📊 Gemiddeld risico profiel")
+    gem_risico = sum(p['risico'] for p in portfolio) / len(portfolio)
+    st.metric("Gemiddeld risico", f"{gem_risico*100:.1f}%")
+
+    if gem_risico > 0.6:
+        st.error("🚨 Hoge blootstelling aan risicogebieden.")
+    elif gem_risico > 0.4:
+        st.warning("⚠️ Risico is gemiddeld. Monitor nauwgezet.")
+    else:
+        st.success("✅ Portefeuille is relatief stabiel.")
 
 elif menu == "Lead & Rapport":
     st.header("📥 Leadgeneratie & Rapportage")
